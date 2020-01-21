@@ -5,6 +5,7 @@ Dev build: [![Build status](https://ci.appveyor.com/api/projects/status/2qk9c4dx
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/IdentityServer/IdentityServer3?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 OWIN Middleware to validate access tokens from IdentityServer v3.
+Updated to use IdentityModel 3.10 + library and updated to .net framework 4.5.2
 
 You can either validate the tokens locally (JWTs only) or use the IdentityServer's access token validation endpoint (JWTs and reference tokens).
 

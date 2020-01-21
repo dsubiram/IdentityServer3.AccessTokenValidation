@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>IdentityServer3.AccessTokenValidation</id>
+    <id>IdentityServer3.AccessTokenValidation.IdentityModel4</id>
     <version>0.0.0</version>
     <title>IdentityServer3 - Access Token Validation</title>
-    <authors>Brock Allen, Dominick Baier</authors>
+    <authors>Brock Allen, Dominick Baier, Deepak Subiramaniyam</authors>
     <owners>Brock Allen, Dominick Baier</owners>
-    <projectUrl>https://github.com/identityserver/IdentityServer3.AccessTokenValidation</projectUrl>
+    <projectUrl>https://github.com/dsubiram/IdentityServer3.AccessTokenValidation</projectUrl>
     <iconUrl>https://identityserver.github.io/Documentation/assets/images/icons/IDserver_icon128.jpg</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://github.com/IdentityServer/IdentityServer3.AccessTokenValidation/blob/master/LICENSE</licenseUrl>
-    <description>Access token validation middleware for JWT and reference tokens issued by IdentityServer3.</description>
+    <description>Access token validation middleware for JWT and reference tokens issued by IdentityServer3 / IdentityServer4, based on IdentityModel 4, Owin 3 and JWT 4.</description>
     <copyright>Copyright 2015</copyright>
     <tags>IdentityServer OpenID Connect OpenIDConnect OAuth2 OWIN ASP.NET Katana WebApi SSO Federation Claims Identity JWT token</tags>
     
@@ -23,8 +23,8 @@
       <dependency id="Owin" version="1.0"/>
       <dependency id="Microsoft.Owin.Security.Jwt" version="3.0.1" />
       <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
-      <dependency id="IdentityModel" version="[1.9.2,2.0)" />
-      <dependency id="Newtonsoft.Json" version="8.0.3" />
+      <dependency id="IdentityModel" version="3.10.0" />
+      <dependency id="Newtonsoft.Json" version="11.0.1" />
       <dependency id="Microsoft.IdentityModel.Protocol.Extensions" version="1.0.2.206221351" />
       <dependency id="System.IdentityModel.Tokens.Jwt" version="4.0.2.206221351" />
     </dependencies>
