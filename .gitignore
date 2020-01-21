@@ -156,4 +156,4 @@ distribution/
 source/IdentityServer3.AccessTokenValidation.sln.GhostDoc.xml
 
 #VS files
-#.vs/
+.vs/
