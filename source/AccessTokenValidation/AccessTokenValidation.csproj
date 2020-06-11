@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\..\build\IdentityServer3.AccessTokenValidation.xml</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>accesstoken.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="IdentityModel, Version=3.10.0.0, Culture=neutral, PublicKeyToken=e7877f4675df049f, processorArchitecture=MSIL">
       <HintPath>..\packages\IdentityModel.3.10.0\lib\net452\IdentityModel.dll</HintPath>
@@ -118,6 +124,7 @@
     <None Include="..\default.licenseheader">
       <Link>default.licenseheader</Link>
     </None>
+    <None Include="accesstoken.snk" />
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>

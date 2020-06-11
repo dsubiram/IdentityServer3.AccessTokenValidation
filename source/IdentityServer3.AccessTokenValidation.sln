@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessTokenValidation", "AccessTokenValidation\AccessTokenValidation.csproj", "{DF867B5D-3A9E-443A-B95E-D8F11E2A88A3}"
 EndProject
@@ -11,6 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3B5156
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessTokenValidation.Tests", "AccessTokenValidation.Tests\AccessTokenValidation.Tests.csproj", "{0243A9FA-E484-43AD-A86C-F399ED79CCF3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StrongName", "StrongName", "{EBE0E339-FC03-4206-8286-04B96043E21E}"
+	ProjectSection(SolutionItems) = preProject
+		accesstoken.snk = accesstoken.snk
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,5 +34,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4AF95EE7-EDE5-4B1E-9AE9-5070BFBE66B2}
 	EndGlobalSection
 EndGlobal
