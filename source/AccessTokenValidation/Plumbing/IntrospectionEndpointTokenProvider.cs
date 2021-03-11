@@ -33,8 +33,8 @@ namespace IdentityServer3.AccessTokenValidation
         private readonly HttpClient _client;
         private readonly IdentityServerBearerTokenAuthenticationOptions _options;
         private readonly DiscoveryDocumentResponse _discovery;
+        private string _introspectionEndpoint;
         private readonly ILogger _logger;
-        private readonly TokenIntrospectionRequest _introspectionRequest;
 
         public IntrospectionEndpointTokenProvider(IdentityServerBearerTokenAuthenticationOptions options, ILoggerFactory loggerFactory)
         {
@@ -47,7 +47,7 @@ namespace IdentityServer3.AccessTokenValidation
 
             var baseAddress = options.Authority.EnsureTrailingSlash();
             baseAddress += "connect/introspect";
-            var introspectionEndpoint = baseAddress;
+            _introspectionEndpoint = baseAddress;
 
             var handler = options.IntrospectionHttpHandler ?? new WebRequestHandler();
 
@@ -69,17 +69,9 @@ namespace IdentityServer3.AccessTokenValidation
             if (response.IsCompleted && !response.IsFaulted)
             {
                 _discovery = response.Result;
-                introspectionEndpoint = _discovery.IntrospectionEndpoint;
+                _introspectionEndpoint = _discovery.IntrospectionEndpoint;
             }
 
-            _introspectionRequest = new TokenIntrospectionRequest();
-            _introspectionRequest.Address = introspectionEndpoint;
-            if (!string.IsNullOrEmpty(options.ClientId))
-            {
-                _introspectionRequest.ClientId = options.ClientId;
-                _introspectionRequest.ClientSecret = options.ClientSecret;
-
-            }
             _options = options;
         }
 
@@ -98,7 +90,16 @@ namespace IdentityServer3.AccessTokenValidation
             TokenIntrospectionResponse response;
             try
             {
-                response = await _client.IntrospectTokenAsync(_introspectionRequest);
+                var introspectionRequest = new TokenIntrospectionRequest();
+                introspectionRequest.Address = _introspectionEndpoint;
+                if (!string.IsNullOrEmpty(_options.ClientId))
+                {
+                    introspectionRequest.ClientId = _options.ClientId;
+                    introspectionRequest.ClientSecret = _options.ClientSecret;
+
+                }
+                introspectionRequest.Token = context.Token;
+                response = await _client.IntrospectTokenAsync(introspectionRequest);
                 if (response.IsError)
                 {
                     _logger.WriteError("Error returned from introspection endpoint: " + response.Error);
