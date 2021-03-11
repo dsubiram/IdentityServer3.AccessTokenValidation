@@ -30,9 +30,11 @@ namespace IdentityServer3.AccessTokenValidation
 {
     internal class IntrospectionEndpointTokenProvider : AuthenticationTokenProvider
     {
-        private readonly IntrospectionClient _client;
+        private readonly HttpClient _client;
         private readonly IdentityServerBearerTokenAuthenticationOptions _options;
+        private readonly DiscoveryDocumentResponse _discovery;
         private readonly ILogger _logger;
+        private readonly TokenIntrospectionRequest _introspectionRequest;
 
         public IntrospectionEndpointTokenProvider(IdentityServerBearerTokenAuthenticationOptions options, ILoggerFactory loggerFactory)
         {
@@ -61,21 +63,23 @@ namespace IdentityServer3.AccessTokenValidation
                 webRequestHandler.ServerCertificateValidationCallback = options.BackchannelCertificateValidator.Validate;
             }
 
-            if (!string.IsNullOrEmpty(options.ClientId))
+            _client = new HttpClient(handler);
+            var response = _client.GetDiscoveryDocumentAsync(baseAddress);
+            response.Wait();
+            if (response.IsCompleted && !response.IsFaulted)
             {
-                _client = new IntrospectionClient(
-                    introspectionEndpoint, 
-                    options.ClientId, 
-                    options.ClientSecret,
-                    handler);
-            }
-            else
-            {
-                _client = new IntrospectionClient(
-                    introspectionEndpoint,
-                    innerHttpMessageHandler: handler);
+                _discovery = response.Result;
+                introspectionEndpoint = _discovery.IntrospectionEndpoint;
             }
 
+            _introspectionRequest = new TokenIntrospectionRequest();
+            _introspectionRequest.Address = introspectionEndpoint;
+            if (!string.IsNullOrEmpty(options.ClientId))
+            {
+                _introspectionRequest.ClientId = options.ClientId;
+                _introspectionRequest.ClientSecret = options.ClientSecret;
+
+            }
             _options = options;
         }
 
@@ -91,10 +95,10 @@ namespace IdentityServer3.AccessTokenValidation
                 }
             }
 
-            IntrospectionResponse response;
+            TokenIntrospectionResponse response;
             try
             {
-                response = await _client.SendAsync(new IntrospectionRequest { Token = context.Token });
+                response = await _client.IntrospectTokenAsync(_introspectionRequest);
                 if (response.IsError)
                 {
                     _logger.WriteError("Error returned from introspection endpoint: " + response.Error);
