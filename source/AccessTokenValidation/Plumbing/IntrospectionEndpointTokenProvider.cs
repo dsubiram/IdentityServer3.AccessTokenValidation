@@ -64,9 +64,9 @@ namespace IdentityServer3.AccessTokenValidation
             }
 
             _client = new HttpClient(handler);
-            var response = _client.GetDiscoveryDocumentAsync(baseAddress);
+            var response = _client.GetDiscoveryDocumentAsync(options.Authority.EnsureTrailingSlash());
             response.Wait();
-            if (response.IsCompleted && !response.IsFaulted)
+            if (response.IsCompleted && !response.IsFaulted && response.Result?.IsError != true )
             {
                 _discovery = response.Result;
                 _introspectionEndpoint = _discovery.IntrospectionEndpoint;
